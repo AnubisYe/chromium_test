@@ -179,6 +179,9 @@
         'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
         'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[object Object]']
     }
+    for(var key in rtf_test_v){
+        test2('rtf_test', key, rtf_test_v[key][0], rtf_test_v[key][1])
+    }
     </script>
 
 </html>
