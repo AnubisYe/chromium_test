@@ -78,8 +78,14 @@
             col4.innerHTML=expect_res;
         }
 
-        function test(id, name, intl_res, expect_res){
+        function test2(id, name, func, expect_res){
             var test_res;
+            var intl_res;
+            try{
+                intl_res = eval(func)
+            }catch(err){
+                intl_res = 'not support'
+            }
             if(intl_res == undefined){
                 intl_res='undefined'
             }
@@ -94,99 +100,107 @@
                 console.log('fail');
                 test_res='×';
             }
-            // console.log(intl_res, expect_res)
-            // insRow(id, test_res, name, intl_res.toString(), expect_res.toString())
             insRow(id, test_res, name, intl_res, expect_res)
-            
-            
         }
     // Intl.Collator
-    test("col_test","Intl.Collator().compare('a', 'c')", Intl.Collator().compare('a', 'c'), '-1');
-    test("col_test","Intl.Collator('de').compare('ä', 'z')", Intl.Collator('de').compare('ä', 'z'), '-1');
-    test("col_test","Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a')", Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a'), '0');
     const locales1 = ['ban', 'id-u-co-pinyin', 'de-ID'];
     const options1 = { localeMatcher: 'lookup' };
-    test("col_test","Intl.Collator.supportedLocalesOf(locales1, options1)", Intl.Collator.supportedLocalesOf(locales1, options1), "id-u-co-pinyin,de-ID");
+    var col_test_v = {
+        "Intl.Collator().compare('a', 'c')" : ["Intl.Collator().compare('a', 'c')", '-1'],
+        "Intl.Collator('de').compare('ä', 'z')" : ["Intl.Collator('de').compare('ä', 'z')", '-1'],
+        "Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a')": ["Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a')", '0'],
+        "Intl.Collator.supportedLocalesOf(locales1, options1)" : ["Intl.Collator.supportedLocalesOf(locales1, options1)", "id-u-co-pinyin,de-ID"],
+    }
+    for(var key in col_test_v){
+        test2('col_test', key, col_test_v[key][0], col_test_v[key][1])
+    }
 
     // Intl.DateTimeFormat
     var date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
-    test("date_test","Intl.DateTimeFormat().format(date)", Intl.DateTimeFormat().format(date), '2012/12/20');
-    test("date_test","Intl.DateTimeFormat('en-US').format(date)", Intl.DateTimeFormat('en-US').format(date), '12/20/2012');
-
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    test("date_test","Intl.DateTimeFormat('en-US', options).format(date)", Intl.DateTimeFormat('en-US', options).format(date), 'Thursday, December 20, 2012');
-
     var options2 = {calendar: 'chinese', numberingSystem: 'arab'};
     var dateFormat = new Intl.DateTimeFormat('default', options2);
     var usedOptions = dateFormat.resolvedOptions();
-    test("date_test","usedOptions.calendar", usedOptions.calendar, 'gregory');
-
-
-    test("date_test","usedOptions.numberingSystem", usedOptions.numberingSystem, 'latn');
-    test("date_test","options.timeZone", options.timeZone, 'undefined');
-
     const options3 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const startDate = new Date(Date.UTC(2007, 0, 10, 10, 0, 0));
     const endDate = new Date(Date.UTC(2008, 0, 10, 11, 0, 0));
     const dateTimeFormat = new Intl.DateTimeFormat('en', options3);
-    test("date_test","dateTimeFormat.formatRange(startDate, endDate)", dateTimeFormat.formatRange(startDate, endDate), 'Wednesday, January 10, 2007 – Thursday, January 10, 2008');
-
     const locales2 = ['ban', 'id-u-co-pinyin', 'de-ID'];
     const options4 = { localeMatcher: 'lookup' };
-    test("date_test", "Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)", Intl.DateTimeFormat.supportedLocalesOf(locales1, options3), 'id-u-co-pinyin,de-ID');
+    var date_test_v = {
+        "Intl.DateTimeFormat().format(date)" : ["Intl.DateTimeFormat().format(date)", '2012/12/20'],
+        "Intl.DateTimeFormat('en-US').format(date)" : ["Intl.DateTimeFormat('en-US').format(date)", '12/20/2012'],
+        "Intl.DateTimeFormat('en-US', options).format(date)" : ["Intl.DateTimeFormat('en-US', options).format(date)", 'Thursday, December 20, 2012'],
+        "usedOptions.calendar" : ["usedOptions.calendar", 'gregory'],
+        "usedOptions.numberingSystem" : ["usedOptions.numberingSystem", 'latn'],
+        "options.timeZone": ["options.timeZone", 'undefined'],
+        "dateTimeFormat.formatRange(startDate, endDate)": ["dateTimeFormat.formatRange(startDate, endDate)", "Wednesday, January 10, 2007 – Thursday, January 10, 2008"],
+        "Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)": ["Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)", 'id-u-co-pinyin,de-ID'],
+    }
+    for(var key in date_test_v){
+        test2('date_test', key, date_test_v[key][0], date_test_v[key][1])
+    }
 
-    // List
+    // list
     const vehicles = ['Motorcycle', 'Bus', 'Car'];
     const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
-    test("list_test", "formatter.format(vehicles)", formatter.format(vehicles), 'Motorcycle, Bus, and Car');
-
+    var list_test_v = {
+        "Intl.ListFormat.format(vehicles)" : ["formatter.format(vehicles)", 'Motorcycle, Bus, and Car']
+    }
+    for(var key in list_test_v){
+        test2('list_test', key, list_test_v[key][0], list_test_v[key][1])
+    }
     //PluralRules
     var pr = new Intl.PluralRules();
-    test('pr_test',"pr.select(0)",pr.select(0),'other');
-    test('pr_test',"Intl.PluralRules('ar-EG').select(0)", new Intl.PluralRules('ar-EG').select(0),'zero');
-    test('pr_test',"Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)", new Intl.PluralRules('en-US', { type: 'ordinal' }).select(0),'other');
+    var pr_test_v = {
+        "pr.select(0)": ['pr.select(0)', 'other'],
+        "Intl.PluralRules('ar-EG').select(0)": ["new Intl.PluralRules('ar-EG').select(0)", 'zero'],
+        "Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)" : ["new Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)", 'other']
+    }
+    for(var key in pr_test_v){
+        test2('pr_test', key, pr_test_v[key][0], pr_test_v[key][1])
+    }
+    
     
     //relative time
+
     const rtf1 = new Intl.RelativeTimeFormat('en');
-    test("rtf_test", "rtf1.format(3, 'quarter')", rtf1.format(3, 'quarter'),'in 3 quarters');
-    test("rtf_test", "rtf1.format(-1, 'day')", rtf1.format(-1, 'day'), '1 day ago');
-
     const rtf2 = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
-    test("rtf_test", "rtf2.format(2, 'day')", rtf2.format(2, 'day'),'pasado mañana');
-
     const rtf = new Intl.RelativeTimeFormat("en", {
         localeMatcher: "best fit", // other values: "lookup"
         numeric: "always", // other values: "auto"
         style: "long", // other values: "short" or "narrow"
     });
-    test("rtf_test", 'rtf.format(-1, "day")', rtf.format(-1, "day"), '1 day ago');
-    test("rtf_test", 'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day"), 'yesterday');
-    test("rtf_test", 'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day"),'[object Object]');
-
+    var rtf_test_v = {
+        "Intl.RelativeTimeFormat('en').format(3, 'quarter')" : ["rtf1.format(3, 'quarter')", 'in 3 quarters'],
+        "Intl.RelativeTimeFormat('en').format(-1, 'day')" : ["rtf1.format(-1, 'day')", '1 day ago'],
+        "rtf2.format(2, 'day')": ["rtf2.format(2, 'day')", 'pasado mañana'],
+        'rtf.format(-1, "day")': ['rtf.format(-1, "day")', '1 day ago'],
+        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
+        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[object Object]']
+    }
     </script>
 
 </html>
-    <script type="text/javascript">
-     function co(){   
-        var l111 = ['col_test', 'date_test', 'pr_test', 'rtf_test']
-        // for (var i = 0, len=l111.length; i--) {
-            // console.log(i)
-        for(var i in l111){
-            var table = document.getElementById(l111[i]);
-            console.log(l111[i])
-            var len = table.rows.length;
-            var _row = table.rows;
-            for(var i = 0;i < len;i++){
-               var _cell = _row[i].cells;
-               var d=_cell[0].innerHTML;
-               console.log('color='+d)
-
-               if(d == "×"){
-                    table.rows[i].style.backgroundColor = "red";
-                }
+<script type="text/javascript">
+ function co(){   
+    var test_list = ['col_test', 'date_test', 'pr_test', 'rtf_test']
+    // for (var i = 0, len=test_list.length; i--) {
+        // console.log(i)
+    for(var i in test_list){
+        var table = document.getElementById(test_list[i]);
+        // console.log(test_list[i])
+        var len = table.rows.length;
+        var _row = table.rows;
+        for(var i = 0;i < len;i++){
+           var _cell = _row[i].cells;
+           var d=_cell[0].innerHTML;
+           // console.log('color='+d)
+           if(d == "×"){
+                table.rows[i].style.backgroundColor = "red";
             }
         }
     }
-    co()
-    
-    </script>
+}
+co()
+</script>
