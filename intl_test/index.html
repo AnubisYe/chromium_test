@@ -119,13 +119,6 @@
     var date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var options2 = {calendar: 'chinese', numberingSystem: 'arab'};
-    try{
-        var dateFormat = new Intl.DateTimeFormat('default', options2);
-        var usedOptions = dateFormat.resolvedOptions();
-    }catch{
-        var usedOptions = null;
-    }
-    
     const options3 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const startDate = new Date(Date.UTC(2007, 0, 10, 10, 0, 0));
     const endDate = new Date(Date.UTC(2008, 0, 10, 11, 0, 0)); 
@@ -135,8 +128,8 @@
         "Intl.DateTimeFormat().format(date)" : ["Intl.DateTimeFormat().format(date)", '2012/12/20'],
         "Intl.DateTimeFormat('en-US').format(date)" : ["Intl.DateTimeFormat('en-US').format(date)", '12/20/2012'],
         "Intl.DateTimeFormat('en-US', options).format(date)" : ["Intl.DateTimeFormat('en-US', options).format(date)", 'Thursday, December 20, 2012'],
-        "usedOptions.calendar" : ["usedOptions.calendar", 'gregory'],
-        "usedOptions.numberingSystem" : ["usedOptions.numberingSystem", 'latn'],
+        "usedOptions.calendar" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().calendar", 'gregory'],
+        "usedOptions.numberingSystem" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().numberingSystem", 'latn'],
         "options.timeZone": ["options.timeZone", 'undefined'],
         "dateTimeFormat.formatRange(startDate, endDate)": ["new Intl.DateTimeFormat('en', options3).formatRange(startDate, endDate)", "Wednesday, January 10, 2007 – Thursday, January 10, 2008"],
         "Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)": ["Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)", 'id-u-co-pinyin,de-ID'],
