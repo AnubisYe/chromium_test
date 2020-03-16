@@ -119,12 +119,16 @@
     var date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var options2 = {calendar: 'chinese', numberingSystem: 'arab'};
-    var dateFormat = new Intl.DateTimeFormat('default', options2);
-    var usedOptions = dateFormat.resolvedOptions();
+    try{
+        var dateFormat = new Intl.DateTimeFormat('default', options2);
+        var usedOptions = dateFormat.resolvedOptions();
+    }catch{
+        var usedOptions = null;
+    }
+    
     const options3 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const startDate = new Date(Date.UTC(2007, 0, 10, 10, 0, 0));
-    const endDate = new Date(Date.UTC(2008, 0, 10, 11, 0, 0));
-    const dateTimeFormat = new Intl.DateTimeFormat('en', options3);
+    const endDate = new Date(Date.UTC(2008, 0, 10, 11, 0, 0)); 
     const locales2 = ['ban', 'id-u-co-pinyin', 'de-ID'];
     const options4 = { localeMatcher: 'lookup' };
     var date_test_v = {
@@ -134,7 +138,7 @@
         "usedOptions.calendar" : ["usedOptions.calendar", 'gregory'],
         "usedOptions.numberingSystem" : ["usedOptions.numberingSystem", 'latn'],
         "options.timeZone": ["options.timeZone", 'undefined'],
-        "dateTimeFormat.formatRange(startDate, endDate)": ["dateTimeFormat.formatRange(startDate, endDate)", "Wednesday, January 10, 2007 – Thursday, January 10, 2008"],
+        "dateTimeFormat.formatRange(startDate, endDate)": ["new Intl.DateTimeFormat('en', options3).formatRange(startDate, endDate)", "Wednesday, January 10, 2007 – Thursday, January 10, 2008"],
         "Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)": ["Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)", 'id-u-co-pinyin,de-ID'],
     }
     for(var key in date_test_v){
@@ -143,17 +147,16 @@
 
     // list
     const vehicles = ['Motorcycle', 'Bus', 'Car'];
-    const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
+    // const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
     var list_test_v = {
-        "Intl.ListFormat.format(vehicles)" : ["formatter.format(vehicles)", 'Motorcycle, Bus, and Car']
+        "Intl.ListFormat.format(vehicles)" : ["new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(vehicles)", 'Motorcycle, Bus, and Car']
     }
     for(var key in list_test_v){
         test2('list_test', key, list_test_v[key][0], list_test_v[key][1])
     }
     //PluralRules
-    var pr = new Intl.PluralRules();
     var pr_test_v = {
-        "pr.select(0)": ['pr.select(0)', 'other'],
+        "new Intl.PluralRules().select(0)": ['new Intl.PluralRules().select(0)', 'other'],
         "Intl.PluralRules('ar-EG').select(0)": ["new Intl.PluralRules('ar-EG').select(0)", 'zero'],
         "Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)" : ["new Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)", 'other']
     }
@@ -164,18 +167,19 @@
     
     //relative time
 
-    const rtf1 = new Intl.RelativeTimeFormat('en');
-    const rtf2 = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
-    const rtf = new Intl.RelativeTimeFormat("en", {
-        localeMatcher: "best fit", // other values: "lookup"
-        numeric: "always", // other values: "auto"
-        style: "long", // other values: "short" or "narrow"
-    });
+    // const rtf1 = new Intl.RelativeTimeFormat('en');
+    // const rtf2 = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
+    // const rtf = new Intl.RelativeTimeFormat("en", {
+    //     localeMatcher: "best fit", // other values: "lookup"
+    //     numeric: "always", // other values: "auto"
+    //     style: "long", // other values: "short" or "narrow"
+    // });
+    
     var rtf_test_v = {
-        "Intl.RelativeTimeFormat('en').format(3, 'quarter')" : ["rtf1.format(3, 'quarter')", 'in 3 quarters'],
-        "Intl.RelativeTimeFormat('en').format(-1, 'day')" : ["rtf1.format(-1, 'day')", '1 day ago'],
-        "rtf2.format(2, 'day')": ["rtf2.format(2, 'day')", 'pasado mañana'],
-        'rtf.format(-1, "day")': ['rtf.format(-1, "day")', '1 day ago'],
+        "Intl.RelativeTimeFormat('en').format(3, 'quarter')" : ["new Intl.RelativeTimeFormat('en').format(3, 'quarter')", 'in 3 quarters'],
+        "Intl.RelativeTimeFormat('en').format(-1, 'day')" : ["new Intl.RelativeTimeFormat('en').format(-1, 'day')", '1 day ago'],
+        "Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')": ["new Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')", 'pasado mañana'],
+        'rtf.format(-1, "day")': ['new Intl.RelativeTimeFormat("en", {localeMatcher: "best fit",numeric: "always",style: "long",}).format(-1, "day")', '1 day ago'],
         'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
         'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[object Object]']
     }
