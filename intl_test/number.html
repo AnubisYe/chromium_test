@@ -2,11 +2,7 @@
 <html>
 <head>
 	<title></title>
-
-</head>
-<body>
-</body>
-	<script type="text/javascript">
+		<script type="text/javascript">
 		const number = 123456.789;
 		var formatter = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
 		function print_array(arr){
@@ -20,5 +16,8 @@
 		}
 		console.log(formatter.formatToParts(number)) ;
 		print_array(formatter.formatToParts(number))
-	</script>>
+	</script>
+</head>
+<body>
+</body>
 </html>
