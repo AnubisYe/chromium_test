@@ -2,12 +2,23 @@
 <html>
 <head>
 	<title></title>
-	<script type="text/javascript">
-		const number = 123456.789;
-		var formatter = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
-		console.log(formatter.formatToParts(number)) 
-	</script>>
+
 </head>
 <body>
 </body>
+	<script type="text/javascript">
+		const number = 123456.789;
+		var formatter = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
+		function print_array(arr){
+			for(var key in arr){
+				if(typeof(arr[key])=='array'||typeof(arr[key])=='object'){//递归调用
+					print_array(arr[key]);
+				}else{
+					document.write(key + ' = ' + arr[key] + '<br>');
+				}
+			}
+		}
+		console.log(formatter.formatToParts(number)) ;
+		print_array(formatter.formatToParts(number))
+	</script>>
 </html>
