@@ -16,6 +16,10 @@
 		}
 		console.log(formatter.formatToParts(number)) ;
 		print_array(formatter.formatToParts(number))
+			
+		const pc = Intl.NumberFormat('en', { style: 'percent', minimumFractionDigits: 2 });
+		document.write(pc.format(-0.123456));
+		print_array(pc.formatToParts(-0.123456));
 	</script>
 </head>
 <body>
