@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <center>
+        <table id="col_test" class="table table-striped">
+            <thead><b>Intl.Collator Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="date_test" class="table table-striped">
+            <thead><b>Intl.DateTimeFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="list_test" class="table table-striped">
+            <thead><b>Intl.ListFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="num_test" class="table table-striped">
+            <thead><b>Intl.NumberFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="pr_test" class="table table-striped">
+            <thead><b>Intl.PluralRules Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="rtf_test" class="table table-striped">
+            <thead><b>Intl.RelativeTimeFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+
+</body>
+<script type="text/javascript">
+        function insRow(id, test_res, name, intl_res, expect_res) {
+            var x = document.getElementById(id).insertRow(-1);
+
+            var col1 = x.insertCell(0);
+            var col2 = x.insertCell(1);
+            var col3 = x.insertCell(2);
+            var col4 = x.insertCell(3);
+            col1.innerHTML=test_res;
+            col2.innerHTML=name;
+            col3.innerHTML=intl_res;
+            col4.innerHTML=expect_res;
+        }
+
+        function test2(id, name, func, expect_res){
+            var test_res;
+            var intl_res;
+            try{
+                intl_res = eval(func)
+            }catch(err){
+                intl_res = 'not support'
+            }
+            if(intl_res == undefined){
+                intl_res='undefined'
+            }
+            if(intl_res instanceof Array){
+                console.log(intl_res)
+                intl_res = intl_res.toString()
+            }
+            if (intl_res == expect_res){
+                console.log('pass');
+                test_res='√';
+            }else{
+                console.log('fail');
+                test_res='×';
+            }
+            insRow(id, test_res, name, intl_res, expect_res)
+        }
+    // Intl.Collator
+    const locales1 = ['ban', 'id-u-co-pinyin', 'de-ID'];
+    const options1 = { localeMatcher: 'lookup' };
+    var col_test_v = {
+        "Intl.Collator().compare('a', 'c')" : ["Intl.Collator().compare('a', 'c')", '-1'],
+        "Intl.Collator('de').compare('ä', 'z')" : ["Intl.Collator('de').compare('ä', 'z')", '-1'],
+        "Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a')": ["Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a')", '0'],
+        "Intl.Collator.supportedLocalesOf(locales1, options1)" : ["Intl.Collator.supportedLocalesOf(locales1, options1)", "id-u-co-pinyin,de-ID"],
+    }
+    for(var key in col_test_v){
+        test2('col_test', key, col_test_v[key][0], col_test_v[key][1])
+    }
+
+    // Intl.DateTimeFormat
+    var date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var options2 = {calendar: 'chinese', numberingSystem: 'arab'};
+    const options3 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const startDate = new Date(Date.UTC(2007, 0, 10, 10, 0, 0));
+    const endDate = new Date(Date.UTC(2008, 0, 10, 11, 0, 0)); 
+    const locales2 = ['ban', 'id-u-co-pinyin', 'de-ID'];
+    const options4 = { localeMatcher: 'lookup' };
+    var date_test_v = {
+        "Intl.DateTimeFormat().format(date)" : ["Intl.DateTimeFormat().format(date)", '2012/12/20'],
+        "Intl.DateTimeFormat('en-US').format(date)" : ["Intl.DateTimeFormat('en-US').format(date)", '12/20/2012'],
+        "Intl.DateTimeFormat('en-US', options).format(date)" : ["Intl.DateTimeFormat('en-US', options).format(date)", 'Thursday, December 20, 2012'],
+        "usedOptions.calendar" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().calendar", 'gregory'],
+        "usedOptions.numberingSystem" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().numberingSystem", 'latn'],
+        "options.timeZone": ["options.timeZone", 'undefined'],
+        "dateTimeFormat.formatRange(startDate, endDate)": ["new Intl.DateTimeFormat('en', options3).formatRange(startDate, endDate)", "Wednesday, January 10, 2007 – Thursday, January 10, 2008"],
+        "Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)": ["Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)", 'id-u-co-pinyin,de-ID'],
+    }
+    for(var key in date_test_v){
+        test2('date_test', key, date_test_v[key][0], date_test_v[key][1])
+    }
+
+    // list
+    const vehicles = ['Motorcycle', 'Bus', 'Car'];
+    // const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
+    var list_test_v = {
+        "Intl.ListFormat.format(vehicles)" : ["new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(vehicles)", 'Motorcycle, Bus, and Car']
+    }
+    for(var key in list_test_v){
+        test2('list_test', key, list_test_v[key][0], list_test_v[key][1])
+    }
+
+    // number
+    const number = 123456.789;
+    number_test_v= {
+        "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)": ["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)", '123.456,79 €'],
+        "Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)":["new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)", '1,23,000'],
+        'Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)':['new Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)', '50 mi/h'],
+        'Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)' : ['new Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)', '9.877E8']
+    }
+    for(var key in number_test_v){
+        test2('num_test', key, number_test_v[key][0], number_test_v[key][1])
+    }
+
+    //PluralRules
+    var pr_test_v = {
+        "new Intl.PluralRules().select(0)": ['new Intl.PluralRules().select(0)', 'other'],
+        "Intl.PluralRules('ar-EG').select(0)": ["new Intl.PluralRules('ar-EG').select(0)", 'zero'],
+        "Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)" : ["new Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)", 'other']
+    }
+    for(var key in pr_test_v){
+        test2('pr_test', key, pr_test_v[key][0], pr_test_v[key][1])
+    }
+    
+    
+    //relative time
+
+    // const rtf1 = new Intl.RelativeTimeFormat('en');
+    // const rtf2 = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
+    // const rtf = new Intl.RelativeTimeFormat("en", {
+    //     localeMatcher: "best fit", // other values: "lookup"
+    //     numeric: "always", // other values: "auto"
+    //     style: "long", // other values: "short" or "narrow"
+    // });
+    
+   
+    </script>
+
+</html>
+
