@@ -197,8 +197,8 @@
         "Intl.RelativeTimeFormat('en').format(-1, 'day')" : ["new Intl.RelativeTimeFormat('en').format(-1, 'day')", '1 day ago'],
         "Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')": ["new Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')", 'pasado mañana'],
         'rtf.format(-1, "day")': ['new Intl.RelativeTimeFormat("en", {localeMatcher: "best fit",numeric: "always",style: "long",}).format(-1, "day")', '1 day ago'],
-        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
-        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[object Object]']
+        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday']//,
+        //'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[object Object]']
     }
     for(var key in rtf_test_v){
         test2('rtf_test', key, rtf_test_v[key][0], rtf_test_v[key][1])
