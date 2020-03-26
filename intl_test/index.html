@@ -6,6 +6,18 @@
 </head>
 <body>
     <center>
+    	<table id="gt_test" class="table table-striped">
+            <thead><b>Intl.getCanonicalLocales Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+
         <table id="col_test" class="table table-striped">
             <thead><b>Intl.Collator Test</b></thead>
             <tbody>
@@ -111,16 +123,20 @@
             if(intl_res == undefined){
                 intl_res='undefined'
             }
+            if(typeof(intl_res)=='boolean'){
+            	intl_res = intl_res.toString()
+            }
             if(intl_res instanceof Array){
                 intl_res = JSON.stringify(intl_res)
                 //console.log(intl_res)
                 //intl_res = intl_res.toString()
             }
-            if (intl_res == expect_res){
-                console.log('pass');
+            console.log(typeof(intl_res))
+            if (intl_res.toString() == expect_res.toString()){
+                // console.log('pass');
                 test_res='√';
             }else{
-                console.log('fail');
+                // console.log('fail');
                 test_res='×';
             }
             if (intl_res==''){
@@ -154,8 +170,8 @@
         "Intl.DateTimeFormat().format(date)" : ["Intl.DateTimeFormat().format(date)", '2012/12/20'],
         "Intl.DateTimeFormat('en-US').format(date)" : ["Intl.DateTimeFormat('en-US').format(date)", '12/20/2012'],
         "Intl.DateTimeFormat('en-US', options).format(date)" : ["Intl.DateTimeFormat('en-US', options).format(date)", 'Thursday, December 20, 2012'],
-        "usedOptions.calendar" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().calendar", 'gregory'],
-        "usedOptions.numberingSystem" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().numberingSystem", 'latn'],
+        "resolvedOptions.calendar" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().calendar", 'gregory'],
+        "resolvedOptions.numberingSystem" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().numberingSystem", 'latn'],
         "options.timeZone": ["options.timeZone", 'undefined'],
         "dateTimeFormat.formatRange(startDate, endDate)": ["new Intl.DateTimeFormat('en', options3).formatRange(startDate, endDate)", "Wednesday, January 10, 2007 – Thursday, January 10, 2008"],
         "dateTimeFormat.formatRangeToParts(startDate, endDate)": ["new Intl.DateTimeFormat('en', options3).formatRangeToParts(startDate, endDate)", '[{"type":"weekday","value":"Wednesday","source":"startRange"},{"type":"literal","value":", ","source":"startRange"},{"type":"month","value":"January","source":"startRange"},{"type":"literal","value":" ","source":"startRange"},{"type":"day","value":"10","source":"startRange"},{"type":"literal","value":", ","source":"startRange"},{"type":"year","value":"2007","source":"startRange"},{"type":"literal","value":" – ","source":"shared"},{"type":"weekday","value":"Thursday","source":"endRange"},{"type":"literal","value":", ","source":"endRange"},{"type":"month","value":"January","source":"endRange"},{"type":"literal","value":" ","source":"endRange"},{"type":"day","value":"10","source":"endRange"},{"type":"literal","value":", ","source":"endRange"},{"type":"year","value":"2008","source":"endRange"}]'],
@@ -171,7 +187,8 @@
     // const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
     var list_test_v = {
         "Intl.ListFormat('en').format()" : ["new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(vehicles)", 'Motorcycle, Bus, and Car'],
-        "Intl.ListFormat('zh').format()" : ["new Intl.ListFormat('zh', { style: 'long', type: 'conjunction' }).format(zhcnlist)", '永鋒、新宇、芳遠和澤遠']
+        "Intl.ListFormat('zh').format()" : ["new Intl.ListFormat('zh', { style: 'long', type: 'conjunction' }).format(zhcnlist)", '永鋒、新宇、芳遠和澤遠'],
+        "Intl.ListFormat.supportedLocalesOf(locales1, options3)": ['Intl.ListFormat.supportedLocalesOf(locales1, options3)', '["id-u-co-pinyin","de-ID"]']
 
     }
     for(var key in list_test_v){
@@ -184,7 +201,8 @@
         "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)": ["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)", '123.456,79\xa0€'],
         "Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)":["new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)", '1,23,000'],
         'Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)':['new Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)', '50 mi/h'],
-        'Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)' : ['new Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)', '9.877E8']
+        'Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)' : ['new Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)', '9.877E8'],
+        'Intl.NumberFormat.supportedLocalesOf(locales1, options3)':['Intl.NumberFormat.supportedLocalesOf(locales1, options3)','["id-u-co-pinyin","de-ID"]']
     }
     for(var key in number_test_v){
         test2('num_test', key, number_test_v[key][0], number_test_v[key][1])
@@ -231,9 +249,28 @@
         "Intl.Locale().baseName":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).baseName", "ko-Kore-KR"],
         "Intl.Locale().hourCycle":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).hourCycle", "h24"],
         "Intl.Locale('ja-Jpan-JP-u-ca-japanese-hc-h12').baseName":["new Intl.Locale('ja-Jpan-JP-u-ca-japanese-hc-h12').baseName", "ja-Jpan-JP"],
+        "Intl.Locale().minimize().baseName":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).minimize().baseName", 'ko'],
+        'Intl.Locale().language':["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).language", 'ko'],
+        "Intl.Locale().script":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).script", 'Kore'],
+        "Intl.Locale().region":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).region", 'KR'],
+        "Intl.Locale().calendar":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).calendar", 'gregory'],
+       	"Intl.Locale().caseFirst":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).caseFirst", 'undefined'],
+       	"Intl.Locale().toString()":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).toString()", 'ko-Kore-KR-u-ca-gregory-hc-h24'],
+       	"Intl.Locale().numeric":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).numeric", 'false'],
+       	"Intl.Locale().numberingSystem":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).numberingSystem", 'undefined'],
+
     }
     for(var key in loc_test_v){
         test2('loc_test', key, loc_test_v[key][0], loc_test_v[key][1])
+    }
+
+    //Intl.getCanonicalLocales
+    var gt_test_v = {
+        "Intl.getCanonicalLocales('EN-US');": ["Intl.getCanonicalLocales('EN-US');", '["en-US"]'],
+        "Intl.getCanonicalLocales(['EN-US', 'Fr']);": ["Intl.getCanonicalLocales(['EN-US', 'Fr']);", '["en-US", "fr"]']
+    }
+    for(var key in gt_test_v){
+        test2('gt_test', key, gt_test_v[key][0], gt_test_v[key][1])
     }
     </script>
 
