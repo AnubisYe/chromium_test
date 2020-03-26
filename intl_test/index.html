@@ -112,8 +112,9 @@
                 intl_res='undefined'
             }
             if(intl_res instanceof Array){
-                console.log(intl_res)
-                intl_res = intl_res.toString()
+                intl_res = JSON.stringify(intl_res)
+                //console.log(intl_res)
+                //intl_res = intl_res.toString()
             }
             if (intl_res == expect_res){
                 console.log('pass');
@@ -179,7 +180,7 @@
     // number
     const number = 123456.789;
     number_test_v= {
-        "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)": ["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)", '123.456,79 €'],
+        "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)": ["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)", '123.456,79\xa0€'],
         "Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)":["new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)", '1,23,000'],
         'Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)':['new Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)', '50 mi/h'],
         'Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)' : ['new Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)', '9.877E8']
