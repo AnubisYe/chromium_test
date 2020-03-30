@@ -115,6 +115,7 @@
         function test2(id, name, func, expect_res){
             var test_res;
             var intl_res;
+            console.log(name + " in test")
             try{
                 intl_res = eval(func)
             }catch(err){
@@ -131,7 +132,6 @@
                 //console.log(intl_res)
                 //intl_res = intl_res.toString()
             }
-            console.log(name + "in test")
             if (intl_res.toString() == expect_res.toString()){
                 // console.log('pass');
                 test_res='√';
@@ -266,8 +266,8 @@
 
     //Intl.getCanonicalLocales
     var gt_test_v = {
-        "Intl.getCanonicalLocales('EN-US');": ["Intl.getCanonicalLocales('EN-US');", '["en-US"]'],
-        "Intl.getCanonicalLocales(['EN-US', 'Fr']);": ["Intl.getCanonicalLocales(['EN-US', 'Fr']);", '["en-US","fr"]']
+        "Intl.getCanonicalLocales('EN-US')": ["Intl.getCanonicalLocales('EN-US')", '["en-US"]'],
+        "Intl.getCanonicalLocales(['EN-US', 'Fr'])": ["Intl.getCanonicalLocales(['EN-US', 'Fr'])", '["en-US","fr"]']
     }
     for(var key in gt_test_v){
         test2('gt_test', key, gt_test_v[key][0], gt_test_v[key][1])
