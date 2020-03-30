@@ -267,7 +267,7 @@
     //Intl.getCanonicalLocales
     var gt_test_v = {
         "Intl.getCanonicalLocales('EN-US');": ["Intl.getCanonicalLocales('EN-US');", '["en-US"]'],
-        "Intl.getCanonicalLocales(['EN-US', 'Fr']);": ["Intl.getCanonicalLocales(['EN-US', 'Fr']);", '["en-US", "fr"]']
+        "Intl.getCanonicalLocales(['EN-US', 'Fr']);": ["Intl.getCanonicalLocales(['EN-US', 'Fr']);", '["en-US","fr"]']
     }
     for(var key in gt_test_v){
         test2('gt_test', key, gt_test_v[key][0], gt_test_v[key][1])
@@ -277,7 +277,7 @@
 </html>
 <script type="text/javascript">
  function co(){   
-    var test_list = ['col_test', 'date_test','list_test', 'num_test', 'pr_test', 'rtf_test', 'loc_test']
+    var test_list = ['col_test', 'date_test','list_test', 'num_test', 'pr_test', 'rtf_test', 'loc_test', 'gt_test']
     // for (var i = 0, len=test_list.length; i--) {
         // console.log(i)
     for(var i in test_list){
