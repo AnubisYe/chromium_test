@@ -234,8 +234,8 @@
         "Intl.RelativeTimeFormat('en').format(-1, 'day')" : ["new Intl.RelativeTimeFormat('en').format(-1, 'day')", '1 day ago'],
         "Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')": ["new Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')", 'pasado mañana'],
         'rtf.format(-1, "day")': ['new Intl.RelativeTimeFormat("en", {localeMatcher: "best fit",numeric: "always",style: "long",}).format(-1, "day")', '1 day ago'],
-        //'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
-        //'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[{"type":"literal","value":"yesterday"}]']
+        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
+        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[{"type":"literal","value":"yesterday"}]']
     }
     for(var key in rtf_test_v){
         test2('rtf_test', key, rtf_test_v[key][0], rtf_test_v[key][1])
@@ -246,19 +246,18 @@
 
     // const japanese = new Intl.Locale('ja-Jpan-JP-u-ca-japanese-hc-h12');
     var loc_test_v = {
-        "Intl.Locale().baseName":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).baseName", "ko-Kore-KR"],
-        "Intl.Locale().hourCycle":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).hourCycle", "h24"],
-        "Intl.Locale('ja-Jpan-JP-u-ca-japanese-hc-h12').baseName":["new Intl.Locale('ja-Jpan-JP-u-ca-japanese-hc-h12').baseName", "ja-Jpan-JP"],
-        "Intl.Locale().minimize().baseName":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).minimize().baseName", 'ko'],
-        'Intl.Locale().language':["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).language", 'ko'],
-        "Intl.Locale().script":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).script", 'Kore'],
-        "Intl.Locale().region":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).region", 'KR'],
-        "Intl.Locale().calendar":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).calendar", 'gregory'],
-       	"Intl.Locale().caseFirst":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).caseFirst", 'undefined'],
-       	"Intl.Locale().toString()":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).toString()", 'ko-Kore-KR-u-ca-gregory-hc-h24'],
-       	"Intl.Locale().numeric":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).numeric", 'false'],
-       	"Intl.Locale().numberingSystem":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).numberingSystem", 'undefined'],
+    	'Intl.Locale("fr-Latn-CA").baseName':['new Intl.Locale("fr-Latn-Ca").baseName', 'fr-Latn-CA'],
+    	'Intl.Locale("fr-Latn-CA").script':['new Intl.Locale("fr-Latn-CA").script', 'Latn'],
+    	'Intl.Locale("fr-Latn-CA").region':['new Intl.Locale("fr-Latn-CA").region', 'CA'],
+    	"Intl.Locale().hourCycle":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24'}).hourCycle", "h24"],
+        "Intl.Locale().calendar":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', calendar: 'gregory'}).calendar", "gregory"],
 
+        //crash "Intl.Locale().minimize().baseName":["new Intl.Locale('fr-Latn-CA').minimize().baseName", 'fr-CA'],
+        'Intl.Locale().language':["new Intl.Locale('ko', {script: 'Kore', region: 'KR', calendar: 'gregory'}).language", 'ko'],
+       	"Intl.Locale().caseFirst":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).caseFirst", 'undefined'],
+       	"Intl.Locale().toString()":["new Intl.Locale('ko', {script: 'Kore', region: 'KR'}).toString()", 'ko-Kore-KR'],
+       	"Intl.Locale().numeric":["new Intl.Locale('ko', {script: 'Kore', region: 'KR'}).numeric", 'false'],
+       	"Intl.Locale().numberingSystem":["new Intl.Locale('ko', {script: 'Kore', region: 'KR'}).numberingSystem", 'undefined'],
     }
     for(var key in loc_test_v){
         test2('loc_test', key, loc_test_v[key][0], loc_test_v[key][1])
