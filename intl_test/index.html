@@ -234,8 +234,10 @@
         "Intl.RelativeTimeFormat('en').format(-1, 'day')" : ["new Intl.RelativeTimeFormat('en').format(-1, 'day')", '1 day ago'],
         "Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')": ["new Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')", 'pasado mañana'],
         'rtf.format(-1, "day")': ['new Intl.RelativeTimeFormat("en", {localeMatcher: "best fit",numeric: "always",style: "long",}).format(-1, "day")', '1 day ago'],
-        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
-        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[{"type":"literal","value":"yesterday"}]']
+        //m66 crash 
+        //'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
+        //m66crash 
+        //'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[{"type":"literal","value":"yesterday"}]']
     }
     for(var key in rtf_test_v){
         test2('rtf_test', key, rtf_test_v[key][0], rtf_test_v[key][1])
@@ -252,7 +254,8 @@
     	"Intl.Locale().hourCycle":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24'}).hourCycle", "h24"],
         "Intl.Locale().calendar":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', calendar: 'gregory'}).calendar", "gregory"],
 
-        //crash "Intl.Locale().minimize().baseName":["new Intl.Locale('fr-Latn-CA').minimize().baseName", 'fr-CA'],
+        //crash 
+        //"Intl.Locale().minimize().baseName":["new Intl.Locale('fr-Latn-CA').minimize().baseName", 'fr-CA'],
         'Intl.Locale().language':["new Intl.Locale('ko', {script: 'Kore', region: 'KR', calendar: 'gregory'}).language", 'ko'],
        	"Intl.Locale().caseFirst":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).caseFirst", 'undefined'],
        	"Intl.Locale().toString()":["new Intl.Locale('ko', {script: 'Kore', region: 'KR'}).toString()", 'ko-Kore-KR'],
