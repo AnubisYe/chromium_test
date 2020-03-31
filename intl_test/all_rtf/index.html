@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <center>
+    	<table id="gt_test" class="table table-striped">
+            <thead><b>Intl.getCanonicalLocales Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="col_test" class="table table-striped">
+            <thead><b>Intl.Collator Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="date_test" class="table table-striped">
+            <thead><b>Intl.DateTimeFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="list_test" class="table table-striped">
+            <thead><b>Intl.ListFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="num_test" class="table table-striped">
+            <thead><b>Intl.NumberFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="pr_test" class="table table-striped">
+            <thead><b>Intl.PluralRules Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="rtf_test" class="table table-striped">
+            <thead><b>Intl.RelativeTimeFormat Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="loc_test" class="table table-striped">
+            <thead><b>Intl.Local Test</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+
+</body>
+<script type="text/javascript">
+        function insRow(id, test_res, name, intl_res, expect_res) {
+            var x = document.getElementById(id).insertRow(-1);
+
+            var col1 = x.insertCell(0);
+            var col2 = x.insertCell(1);
+            var col3 = x.insertCell(2);
+            var col4 = x.insertCell(3);
+            col1.innerHTML=test_res;
+            col2.innerHTML=name;
+            col3.innerHTML=intl_res;
+            col4.innerHTML=expect_res;
+        }
+
+        function test2(id, name, func, expect_res){
+            var test_res;
+            var intl_res;
+            console.log(name + " in test")
+            try{
+                intl_res = eval(func)
+            }catch(err){
+                intl_res = 'not support'
+            }
+            if(intl_res == undefined){
+                intl_res='undefined'
+            }
+            if(typeof(intl_res)=='boolean'){
+            	intl_res = intl_res.toString()
+            }
+            if(intl_res instanceof Array){
+                intl_res = JSON.stringify(intl_res)
+                //console.log(intl_res)
+                //intl_res = intl_res.toString()
+            }
+            if (intl_res.toString() == expect_res.toString()){
+                // console.log('pass');
+                test_res='√';
+            }else{
+                // console.log('fail');
+                test_res='×';
+            }
+            if (intl_res===''){
+                intl_res='null';
+            }
+            insRow(id, test_res, name, intl_res, expect_res)
+        }
+    // Intl.Collator
+    const locales1 = ['ban', 'id-u-co-pinyin', 'de-ID'];
+    const options1 = { localeMatcher: 'lookup' };
+    var col_test_v = {
+        "Intl.Collator().compare('a', 'c')" : ["Intl.Collator().compare('a', 'c')", '-1'],
+        "Intl.Collator('de').compare('ä', 'z')" : ["Intl.Collator('de').compare('ä', 'z')", '-1'],
+        "Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a')": ["Intl.Collator('de', { sensitivity: 'base' }).compare('ä', 'a')", '0'],
+        "Intl.Collator.supportedLocalesOf(locales1, options1)" : ["Intl.Collator.supportedLocalesOf(locales1, options1)", '["id-u-co-pinyin","de-ID"]'],
+    }
+    for(var key in col_test_v){
+        test2('col_test', key, col_test_v[key][0], col_test_v[key][1])
+    }
+
+    // Intl.DateTimeFormat
+    var date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var options2 = {calendar: 'chinese', numberingSystem: 'arab'};
+    const options3 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const startDate = new Date(Date.UTC(2007, 0, 10, 10, 0, 0));
+    const endDate = new Date(Date.UTC(2008, 0, 10, 11, 0, 0)); 
+    const locales2 = ['ban', 'id-u-co-pinyin', 'de-ID'];
+    const options4 = { localeMatcher: 'lookup' };
+    var date_test_v = {
+        "Intl.DateTimeFormat().format(date)" : ["Intl.DateTimeFormat().format(date)", '2012/12/20'],
+        "Intl.DateTimeFormat('en-US').format(date)" : ["Intl.DateTimeFormat('en-US').format(date)", '12/20/2012'],
+        "Intl.DateTimeFormat('en-US', options).format(date)" : ["Intl.DateTimeFormat('en-US', options).format(date)", 'Thursday, December 20, 2012'],
+        "resolvedOptions.calendar" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().calendar", 'gregory'],
+        "resolvedOptions.numberingSystem" : ["new Intl.DateTimeFormat('default', options2).resolvedOptions().numberingSystem", 'latn'],
+        "options.timeZone": ["options.timeZone", 'undefined'],
+        "dateTimeFormat.formatRange(startDate, endDate)": ["new Intl.DateTimeFormat('en', options3).formatRange(startDate, endDate)", "Wednesday, January 10, 2007 – Thursday, January 10, 2008"],
+        "dateTimeFormat.formatRangeToParts(startDate, endDate)": ["new Intl.DateTimeFormat('en', options3).formatRangeToParts(startDate, endDate)", '[{"type":"weekday","value":"Wednesday","source":"startRange"},{"type":"literal","value":", ","source":"startRange"},{"type":"month","value":"January","source":"startRange"},{"type":"literal","value":" ","source":"startRange"},{"type":"day","value":"10","source":"startRange"},{"type":"literal","value":", ","source":"startRange"},{"type":"year","value":"2007","source":"startRange"},{"type":"literal","value":" – ","source":"shared"},{"type":"weekday","value":"Thursday","source":"endRange"},{"type":"literal","value":", ","source":"endRange"},{"type":"month","value":"January","source":"endRange"},{"type":"literal","value":" ","source":"endRange"},{"type":"day","value":"10","source":"endRange"},{"type":"literal","value":", ","source":"endRange"},{"type":"year","value":"2008","source":"endRange"}]'],
+        "Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)": ["Intl.DateTimeFormat.supportedLocalesOf(locales1, options3)", '["id-u-co-pinyin","de-ID"]'],
+    }
+    for(var key in date_test_v){
+        test2('date_test', key, date_test_v[key][0], date_test_v[key][1])
+    }
+
+    // list
+    const vehicles = ['Motorcycle', 'Bus', 'Car'];
+    const zhcnlist = ['永鋒', '新宇', '芳遠', '澤遠']
+    // const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
+    var list_test_v = {
+        "Intl.ListFormat('en').format()" : ["new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(vehicles)", 'Motorcycle, Bus, and Car'],
+        "Intl.ListFormat('zh').format()" : ["new Intl.ListFormat('zh', { style: 'long', type: 'conjunction' }).format(zhcnlist)", '永鋒、新宇、芳遠和澤遠'],
+        "Intl.ListFormat.supportedLocalesOf(locales1, options3)": ['Intl.ListFormat.supportedLocalesOf(locales1, options3)', '["id-u-co-pinyin","de-ID"]']
+
+    }
+    for(var key in list_test_v){
+        test2('list_test', key, list_test_v[key][0], list_test_v[key][1])
+    }
+
+    // number
+    const number = 123456.789;
+    number_test_v= {
+        "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)": ["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)", '123.456,79\xa0€'],
+        "Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)":["new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)", '1,23,000'],
+        'Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)':['new Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)', '50 mi/h'],
+        'Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)' : ['new Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)', '9.877E8'],
+        'Intl.NumberFormat.supportedLocalesOf(locales1, options3)':['Intl.NumberFormat.supportedLocalesOf(locales1, options3)','["id-u-co-pinyin","de-ID"]']
+    }
+    for(var key in number_test_v){
+        test2('num_test', key, number_test_v[key][0], number_test_v[key][1])
+    }
+
+    //PluralRules
+    var pr_test_v = {
+        "new Intl.PluralRules().select(0)": ['new Intl.PluralRules().select(0)', 'other'],
+        "Intl.PluralRules('ar-EG').select(0)": ["new Intl.PluralRules('ar-EG').select(0)", 'zero'],
+        "Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)" : ["new Intl.PluralRules('en-US', { type: 'ordinal' }).select(0)", 'other']
+    }
+    for(var key in pr_test_v){
+        test2('pr_test', key, pr_test_v[key][0], pr_test_v[key][1])
+    }
+    
+    
+    //relative time
+
+    // const rtf1 = new Intl.RelativeTimeFormat('en');
+    // const rtf2 = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
+    // const rtf = new Intl.RelativeTimeFormat("en", {
+    //     localeMatcher: "best fit", // other values: "lookup"
+    //     numeric: "always", // other values: "auto"
+    //     style: "long", // other values: "short" or "narrow"
+    // });
+    
+    var rtf_test_v = {
+        "Intl.RelativeTimeFormat('en').format(3, 'quarter')" : ["new Intl.RelativeTimeFormat('en').format(3, 'quarter')", 'in 3 quarters'],
+        "Intl.RelativeTimeFormat('en').format(-1, 'day')" : ["new Intl.RelativeTimeFormat('en').format(-1, 'day')", '1 day ago'],
+        "Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')": ["new Intl.RelativeTimeFormat('es', { numeric: 'auto' }).format(2, 'day')", 'pasado mañana'],
+        'rtf.format(-1, "day")': ['new Intl.RelativeTimeFormat("en", {localeMatcher: "best fit",numeric: "always",style: "long",}).format(-1, "day")', '1 day ago'],
+        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day")', 'yesterday'],
+        //m66 crash 
+        'Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")': ['new Intl.RelativeTimeFormat("en", { numeric: "auto" }).formatToParts(-1, "day")', '[{"type":"literal","value":"yesterday"}]']
+    }
+    for(var key in rtf_test_v){
+        test2('rtf_test', key, rtf_test_v[key][0], rtf_test_v[key][1])
+    }
+
+    //Intl.Locale
+    // const korean = new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'});
+
+    // const japanese = new Intl.Locale('ja-Jpan-JP-u-ca-japanese-hc-h12');
+    var loc_test_v = {
+    	'Intl.Locale("fr-Latn-CA").baseName':['new Intl.Locale("fr-Latn-Ca").baseName', 'fr-Latn-CA'],
+    	'Intl.Locale("fr-Latn-CA").script':['new Intl.Locale("fr-Latn-CA").script', 'Latn'],
+    	'Intl.Locale("fr-Latn-CA").region':['new Intl.Locale("fr-Latn-CA").region', 'CA'],
+    	"Intl.Locale().hourCycle":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24'}).hourCycle", "h24"],
+        "Intl.Locale().calendar":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', calendar: 'gregory'}).calendar", "gregory"],
+
+        //crash 
+        //"Intl.Locale().minimize().baseName":["new Intl.Locale('fr-Latn-CA').minimize().baseName", 'fr-CA'],
+        'Intl.Locale().language':["new Intl.Locale('ko', {script: 'Kore', region: 'KR', calendar: 'gregory'}).language", 'ko'],
+       	"Intl.Locale().caseFirst":["new Intl.Locale('ko', {script: 'Kore', region: 'KR', hourCycle: 'h24', calendar: 'gregory'}).caseFirst", 'undefined'],
+       	"Intl.Locale().toString()":["new Intl.Locale('ko', {script: 'Kore', region: 'KR'}).toString()", 'ko-Kore-KR'],
+       	"Intl.Locale().numeric":["new Intl.Locale('ko', {script: 'Kore', region: 'KR'}).numeric", 'false'],
+       	"Intl.Locale().numberingSystem":["new Intl.Locale('ko', {script: 'Kore', region: 'KR'}).numberingSystem", 'undefined'],
+    }
+    for(var key in loc_test_v){
+        test2('loc_test', key, loc_test_v[key][0], loc_test_v[key][1])
+    }
+
+    //Intl.getCanonicalLocales
+    var gt_test_v = {
+        "Intl.getCanonicalLocales('EN-US')": ["Intl.getCanonicalLocales('EN-US')", '["en-US"]'],
+        "Intl.getCanonicalLocales(['EN-US', 'Fr'])": ["Intl.getCanonicalLocales(['EN-US', 'Fr'])", '["en-US","fr"]']
+    }
+    for(var key in gt_test_v){
+        test2('gt_test', key, gt_test_v[key][0], gt_test_v[key][1])
+    }
+    </script>
+
+</html>
+<script type="text/javascript">
+ function co(){   
+    var test_list = ['col_test', 'date_test','list_test', 'num_test', 'pr_test', 'rtf_test', 'loc_test', 'gt_test']
+    // for (var i = 0, len=test_list.length; i--) {
+        // console.log(i)
+    for(var i in test_list){
+        var table = document.getElementById(test_list[i]);
+        // console.log(test_list[i])
+        var len = table.rows.length;
+        var _row = table.rows;
+        for(var i = 0;i < len;i++){
+           var _cell = _row[i].cells;
+           var d=_cell[0].innerHTML;
+           // console.log('color='+d)
+           if(d == "×"){
+                table.rows[i].style.backgroundColor = "red";
+            }
+        }
+    }
+}
+co()
+</script>
