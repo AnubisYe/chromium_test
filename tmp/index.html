@@ -4,10 +4,15 @@
 	<title></title>
 </head>
 <script type="text/javascript">
-	var number = 1;
-	number.toLocaleString('en-US',{minimumIntegerDigits:3, useGrouping: false});
+	function ex(){
+		var number = 1;
+		var xx = number.toLocaleString('en-US',{minimumIntegerDigits:3, useGrouping: false});
+		console.log(xx);
+	}
+	
 </script>
 <body>
-111
+<button onclick="ex();">======</button>
+
 </body>
 </html>
