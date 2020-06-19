@@ -202,9 +202,17 @@
     const number = 123456.789;
     number_test_v= {
         "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)": ["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)", '123.456,79\xa0€'],
+        "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number).toString()" :["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number).toString()", "123.456,79 €"],
+        "Intl.NumberFormat('zh-Hans-CN-u-nu-hanidec').format(number)" : ["Intl.NumberFormat('zh-Hans-CN-u-nu-hanidec').format(number)", "一二三,四五六.七八九"],
         "Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)":["new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)", '1,23,000'],
         'Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)':['new Intl.NumberFormat("pt-PT",  {style: "unit",unit: "mile-per-hour"}).format(50)', '50 mi/h'],
         'Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)' : ['new Intl.NumberFormat("en-US", { notation: "scientific" }).format(987654321)', '9.877E8'],
+        "Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number).length" : ["Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number).length", "12"],
+        "number.toLocaleString()" : ["number.toLocaleString()", "123,456.789"],
+        "number.toFixed()" : ["number.toFixed()", "123457"],
+        "number.toExponential()" : ["number.toExponential()", "1.23456789e+5"],
+        "number.toPrecision()" : ["number.toPrecision()", "123456.789"],
+        "number.valueOf()" : ["number.valueOf()", "123456.789"],
         'Intl.NumberFormat.supportedLocalesOf(locales1, options3)':['Intl.NumberFormat.supportedLocalesOf(locales1, options3)','["id-u-co-pinyin","de-ID"]']
     }
     for(var key in number_test_v){
