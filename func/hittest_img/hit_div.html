@@ -2,14 +2,37 @@
 <html>
 <head>
   <title></title>
+  <style type="text/css">
+  	
+  	.photo-prev, .photo-next {
+	    position: absolute;
+	    top: 0;
+	    width: 50%;
+	    height: 90%;
+	    cursor: pointer;
+	}
+	.pic-bg {
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	    background: #fff;
+	    filter: alpha(opacity=0);
+	    opacity: 0;
+	    width: 100%;
+	    height: 100%;
+	}
+  </style>
 </head>
 <body>
-            <div id="div1"> 
-                <div id="div2">
-                    <div id="div3">
-                    	<img src="https://www.w3school.com.cn/i/eg_chinarose.jpg" />
-                    </div>
-                </div>
+    <div id="div1"> 
+        <div id="div2">
+            <div id="div3">
+            	<img src="https://www.w3school.com.cn/i/eg_chinarose.jpg" />
             </div>
-        </body>
+            <div class="photo-next prev-next" id="photo-next">
+				<span id="nextPic" class="pic-bg"></span>
+			</div>
+        </div>
+    </div>
+</body>
 </html>
