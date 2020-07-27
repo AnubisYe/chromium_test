@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+  <center>
+        <table id="minmax_test" class="table table-striped">
+            <thead><b>ICU minimize/maxmize 问题测试</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- <table id="cmp_test" class="table table-striped">
+            <thead><b>ICU 华泰证券 问题测试</b></thead>
+            <tbody>
+                <tr>
+                    <td>result</td>
+                    <td>test case</td>
+                    <td>real</td>
+                    <td>expect</td>
+                </tr>
+            </tbody>
+        </table> -->
+  </center>
+</body>
+<script type="text/javascript">
+        function insRow(id, test_res, name, intl_res, expect_res) {
+            var x = document.getElementById(id).insertRow(-1);
+
+            var col1 = x.insertCell(0);
+            var col2 = x.insertCell(1);
+            var col3 = x.insertCell(2);
+            var col4 = x.insertCell(3);
+            col1.innerHTML=test_res;
+            col2.innerHTML=name;
+            col3.innerHTML=intl_res;
+            col4.innerHTML=expect_res;
+        }
+
+        function test2(id, name, func, expect_res){
+            var test_res;
+            var intl_res;
+            console.log(name + " in test")
+            try{
+                intl_res = eval(func)
+            }catch(err){
+                intl_res = 'not support'
+            }
+            if(intl_res == undefined){
+                intl_res='undefined'
+            }
+            if(typeof(intl_res)=='boolean'){
+                intl_res = intl_res.toString()
+            }
+            if(intl_res instanceof Array){
+                intl_res = JSON.stringify(intl_res)
+                //console.log(intl_res)
+                //intl_res = intl_res.toString()
+            }
+            if (intl_res.toString() == expect_res.toString()){
+                // console.log('pass');
+                test_res='√';
+            }else{
+                // console.log('fail');
+                test_res='×';
+            }
+            if (intl_res===''){
+                intl_res='null';
+            }
+            insRow(id, test_res, name, intl_res, expect_res)
+        }
+
+	    var col_test_v = {
+	        "Intl.Locale('ar-Arab-EG').maximize()" : ["new Intl.Locale('ar-Arab-EG').maximize().baseName", 'ar-Arab-EG'],
+	        "Intl.Intl.Locale('ar-Arab-EG').minimize()" : ["new Intl.Locale('ar-Arab-EG').minimize().baseName", 'ar']
+	    }
+	    for(var key in col_test_v){
+	        test2('minmax_test', key, col_test_v[key][0], col_test_v[key][1])
+	    }
+
+
+	  //   var a="TEXT1".substring(0,4)
+ 		// var b="TEXt"
+ 		// var c = a.toUpperCase()
+ 		// var d = b.toUpperCase()
+	  //   var c_test_v = {
+	  //       "a.localeCompare(b)" : ["a.localeCompare(b)", '1'],
+	  //       "b.localeCompare(a)" : ["b.localeCompare(a)", '-1'],
+	  //       "c.localeCompare(d)" : ["c.localeCompare(d)", '0']
+	  //   }
+	  //   for(var key in c_test_v){
+	  //       test2('cmp_test', key, c_test_v[key][0], c_test_v[key][1])
+	  //   }
+    </script>
+</html>
+<script type="text/javascript">
+ function co(){   
+    var test_list = ['minmax_test']
+    // for (var i = 0, len=test_list.length; i--) {
+        // console.log(i)
+    for(var i in test_list){
+        var table = document.getElementById(test_list[i]);
+        // console.log(test_list[i])
+        var len = table.rows.length;
+        var _row = table.rows;
+        for(var i = 0;i < len;i++){
+           var _cell = _row[i].cells;
+           var d=_cell[0].innerHTML;
+           // console.log('color='+d)
+           if(d == "×"){
+                table.rows[i].style.backgroundColor = "red";
+            }
+        }
+    }
+}
+co()
+</script>
